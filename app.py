@@ -21,7 +21,7 @@ subprocess.Popen('C:\LDPlayer\LDPlayer4.0\dnplayer.exe')
 
 def wait_for_icon_to_appear(img_btn, time_out=100, grayscale=True):
 	print('I: waiting for button ...')
-	while not (pyautogui.locateOnScreen(img_btn, region=(479, 269, 1441, 812), grayscale=grayscale, confidence=0.8) and time_out > 0):
+	while not (pyautogui.locateOnScreen(img_btn, grayscale=grayscale, confidence=0.8) and time_out > 0):
 		time_out -= 1
 		time.sleep(1)
 
@@ -29,7 +29,7 @@ def wait_for_icon_to_appear(img_btn, time_out=100, grayscale=True):
 
 def wait_for_icon_to_disappear(img_btn, grayscale=True):
 	print('I: watching button...')
-	while (pyautogui.locateOnScreen(img_btn, region=(479, 269, 1441, 812), grayscale=grayscale, confidence=0.8)):
+	while (pyautogui.locateOnScreen(img_btn, grayscale=grayscale, confidence=0.8)):
 		time_out -= 1
 		time.sleep(1)
 
@@ -48,8 +48,8 @@ def login_wait():
 	print('logging in ...')
 	wait_for_icon_to_appear('rss/x_btn.png', 188)
 	time.sleep(1)
-	while pyautogui.locateOnScreen('rss/x_btn.png', confidence=0.8, region=(479, 269, 1441, 812), grayscale=True):
-		x, y = pyautogui.locateCenterOnScreen('rss/x_btn.png', confidence=0.8, region=(479, 269, 1441, 812), grayscale=True)
+	while pyautogui.locateOnScreen('rss/x_btn.png', confidence=0.8, grayscale=True):
+		x, y = pyautogui.locateCenterOnScreen('rss/x_btn.png', confidence=0.8, grayscale=True)
 		time.sleep(0.3)
 		pyautogui.click(x=x, y=y)
 		time.sleep(1)
@@ -107,10 +107,12 @@ def shield():
 			switch_account(account)
 
 		print('bubblin '+account+' ...')
+		time.sleep(1)
 		pyautogui.click(x=1410, y=459)
-		time.sleep(1)
-		pyautogui.click(x=1282, y=561)
-		time.sleep(1)
+		
+		wait_for_icon_to_appear('boosts/shield.png')
+		pyautogui.click('boosts/shield.png')
+		time.sleep(1) ###############################################0.1
 
 		if datetime.datetime.today().weekday() > 4:
 			print('Weekend, shields already up!')
@@ -126,9 +128,15 @@ def shield():
 		
 		time.sleep(1)
 		pyautogui.click(x=1033, y=531)
+
 		time.sleep(1)
+
 		pyautogui.click(x=1404, y=306)
 		time.sleep(1)
+
+		evd = pyautogui.screenshot(region=(479, 269, 963, 543))
+		evd.save(r'E:\.111\python\oukrekya\logs\shields\\'+account+'.png')
+
 		print('good, switching')
 		acc_num += 1
 
@@ -172,7 +180,7 @@ def kvk():
 			if runs == 0:
 				pyautogui.click(x=744, y=359)
 
-				while not pyautogui.locateOnScreen('rss/event_kvk.png', region=(479, 269, 1441, 812), grayscale=True, confidence=0.8):
+				while not pyautogui.locateOnScreen('rss/event_kvk.png', grayscale=True, confidence=0.8):
 					pyautogui.moveTo(x=846, y=490)
 					pyautogui.drag(100, 0, duration=0.5)
 					time.sleep(1)
