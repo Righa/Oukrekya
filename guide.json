@@ -1,0 +1,34 @@
+{
+	"accounts" : {
+		"sneaky" : {
+			"sta" : "elementalist",
+			"vip" : true,
+			"hyper" : "stone"
+		},
+		"lmara" : {
+			"sta" : "elementalist",
+			"vip" : false,
+			"hyper" : "wood"
+		},
+		"imara" : {
+			"sta" : "elementalist",
+			"vip" : true,
+			"hyper" : "ore"
+		},
+		"snaeky" : {
+			"sta" : "elementalist",
+			"vip" : false,
+			"hyper" : "ore"
+		},
+		"gachiq" : {
+			"sta" : "elementalist",
+			"vip" : true,
+			"hyper" : "ore"
+		},
+		"kibunja" : {
+			"sta" : "elementalist",
+			"vip" : true,
+			"hyper" : "wood"
+		}
+	}
+}

@@ -1,21 +1,31 @@
 ## imports
 
-import pyautogui, subprocess, time, datetime
+import pyautogui, subprocess, time, datetime, winsound, json
+
+## import guide
+
+guide_json = open('guide.json')
+guide = json.load(guide_json)
 
 ## vars
 
-accounts = ['sneaky', 'lmara', 'imara', 'snaeky', 'gachiq', 'kibunja']
+accounts = [*guide['accounts'].keys()]
 
-# kname oukrekya
+# recovery vars
 
-# region(479, 269, 1441, 812), grayscale=True
-
-# if time.strftime('%H:%M') < '21:00':
+start_with = ''
 
 subprocess.Popen('C:\LDPlayer\LDPlayer4.0\dnplayer.exe')
 
 
 ## funcs
+
+# gives alert beep
+
+def cry():
+	for i in range(3):
+		winsound.Beep(999, 444)
+		time.sleep(0.1)
 
 # waits for image to appear
 
@@ -27,9 +37,9 @@ def wait_for_icon_to_appear(img_btn, time_out=100, grayscale=True):
 
 # waits for image to disappear
 
-def wait_for_icon_to_disappear(img_btn, grayscale=True):
+def wait_for_icon_to_disappear(img_btn, time_out=100, grayscale=True):
 	print('I: watching button...')
-	while (pyautogui.locateOnScreen(img_btn, grayscale=grayscale, confidence=0.8)):
+	while (pyautogui.locateOnScreen(img_btn, grayscale=grayscale, confidence=0.8) and time_out > 0):
 		time_out -= 1
 		time.sleep(1)
 
@@ -65,18 +75,163 @@ def switch_account(account):
 	pyautogui.click(x=953, y=574)
 	time.sleep(0.4)
 	pyautogui.click(x=981, y=518)
-	wait_for_icon_to_appear('rss/'+account+'.png', 100)
+	wait_for_icon_to_appear('accounts/'+account+'.png', 100)
 	time.sleep(0.1)
-	pyautogui.click('rss/'+account+'.png')
+	pyautogui.click('accounts/'+account+'.png')
 	time.sleep(0.3)
-	pyautogui.click('rss/ok_switch_account.png')
+	pyautogui.click('accounts/ok_switch_account.png')
 	time.sleep(1)
-	wait_for_icon_to_appear('rss/confirm_switch.png', 100)
+	wait_for_icon_to_appear('accounts/confirm_switch.png', 100)
 	time.sleep(0.1)
-	pyautogui.click('rss/confirm_switch.png')
+	pyautogui.click('accounts/confirm_switch.png')
 	print('logging in ...')
 	time.sleep(8)
 	login_wait()
+
+# collect gifts
+
+def collect_gifts(account):
+	print('collecting gifts')
+	time.sleep(0.3)
+	pyautogui.click(x=927, y=775)
+	time.sleep(3)
+	pyautogui.click(x=1370, y=412)
+	time.sleep(1)
+	pyautogui.click(x=1206, y=481)
+	time.sleep(1.9)
+	pyautogui.click(x=1235, y=454)
+	time.sleep(1)
+
+	if guide['accounts'][account]['vip']:
+		wait_for_icon_to_appear('guild/open_all_gifts.png')
+		x, y = pyautogui.locateCenterOnScreen('guild/open_all_gifts.png', confidence=0.8, grayscale=True)
+		pyautogui.click(x=x, y=y)
+		time.sleep(3)
+		x, y = pyautogui.locateCenterOnScreen('guild/delete_all.png', confidence=0.8, grayscale=True)
+		pyautogui.click(x=x, y=y)
+		wait_for_icon_to_appear('guild/no_bonus_chests.png')
+		time.sleep(1)
+		pyautogui.click(x=979, y=449)
+		wait_for_icon_to_disappear('guild/no_bonus_chests.png')
+		time.sleep(3)
+		wait_for_icon_to_appear('guild/open_all_gifts.png')
+		x, y = pyautogui.locateCenterOnScreen('guild/open_all_gifts.png', confidence=0.8, grayscale=True)
+		pyautogui.click(x=x, y=y)
+		time.sleep(3)
+		x, y = pyautogui.locateCenterOnScreen('guild/delete_all.png', confidence=0.8, grayscale=True)
+		pyautogui.click(x=x, y=y)
+		wait_for_icon_to_appear('guild/no_guild_gifts.png')
+
+	else:
+		pyautogui.click(x=1463, y=467)
+		time.sleep(1)
+		pyautogui.click(x=1137, y=457)
+		time.sleep(1)
+		pyautogui.click(x=1221, y=332)
+		wait_for_icon_to_appear('guild/no_bonus_chests.png')
+		time.sleep(3)
+		pyautogui.click(x=1207, y=254)
+		time.sleep(3)
+		
+		pyautogui.click(x=979, y=449)
+		time.sleep(1)
+		pyautogui.click(x=1463, y=467)
+		time.sleep(0.3)
+		pyautogui.click(x=1137, y=457)
+		time.sleep(0.3)
+		pyautogui.click(x=1221, y=332)
+		wait_for_icon_to_appear('guild/no_guild_gifts.png')
+		pyautogui.click(x=1207, y=254)
+
+	time.sleep(1)
+	pyautogui.click(x=1404, y=306)
+	time.sleep(1)
+	pyautogui.click(x=1404, y=306)
+	time.sleep(3)
+	evd = pyautogui.screenshot(region=(479, 269, 963, 543))
+	evd.save(r'C:\Users\lawrencie\Desktop\reports\guild\\'+account+'.png')
+
+# send help
+
+def send_help():
+	print('helping')
+	if pyautogui.locateOnScreen('turf/help.png', confidence=0.7):
+		time.sleep(1)
+		x,y = pyautogui.locateCenterOnScreen('turf/help.png', confidence=0.7)
+		pyautogui.click(x=x, y=y)
+		time.sleep(1)
+		pyautogui.click(x=955, y=766)
+		time.sleep(1)
+		pyautogui.click(x=1404, y=306)
+
+# quests
+
+def quests():
+	pyautogui.click(x=1088, y=768)
+	time.sleep(0.3)
+	pyautogui.click(x=1461, y=466)
+	time.sleep(0.1)
+	pyautogui.click(x=1138, y=610)
+	time.sleep(0.1)
+	pyautogui.click(x=1222, y=331)
+	time.sleep(1)
+	wait_for_icon_to_appear('quests/no_more_quests.png')
+	time.sleep(1)
+	wait_for_icon_to_appear('quests/no_more_quests.png')
+	time.sleep(1)
+	wait_for_icon_to_appear('quests/no_more_quests.png')
+	pyautogui.click(x=1207, y=254)
+	time.sleep(0.1)
+	pyautogui.click(x=1406, y=305)
+	time.sleep(1)
+
+# mysery_box
+
+def mysery_box():
+	time.sleep(1)
+	pyautogui.click(x=1333, y=683)
+	time.sleep(1)
+	pyautogui.click(x=960, y=663)
+	time.sleep(3)
+
+# login gifts
+
+def login_gifts():
+	pyautogui.click(x=742, y=357)
+	time.sleep(1)
+
+	if pyautogui.locateOnScreen('events/login_gifts.png', confidence=0.8, grayscale=True):
+		x, y = pyautogui.locateCenterOnScreen('events/login_gifts.png', confidence=0.8, grayscale=True)
+		pyautogui.click(x=x, y=y)
+		time.sleep(1)
+		time.sleep(1)
+
+		if pyautogui.locateOnScreen('events/claim_login_gifts.png', confidence=0.7, grayscale=True):
+			x, y = pyautogui.locateCenterOnScreen('events/claim_login_gifts.png', confidence=0.7, grayscale=True)
+			pyautogui.click(x=x, y=y)
+		else:
+			print('login gifts claim button no make sense')
+
+		time.sleep(1)
+		pyautogui.click(x=1406, y=304)
+	else:
+		print('login gifts event card not found')
+
+	time.sleep(0.3)
+	pyautogui.click(x=1406, y=304)
+	time.sleep(1)
+
+# emote
+
+def emote():
+	pyautogui.click(x=950, y=297)
+	time.sleep(0.3)
+	pyautogui.click(x=1158, y=762)
+	time.sleep(0.3)
+	pyautogui.click(x=965, y=656)
+	time.sleep(0.3)
+	pyautogui.click(x=1406, y=306)
+	time.sleep(1)
 
 # normal stuff
 
@@ -84,14 +239,26 @@ def routine():
 	print('daily stuff...')
 	login_wait()
 
-	acc_num = 0
+	acc_num = accounts.index(start_with)
 
-	for account in accounts:
-		if acc_num > 0:
-			switch_account(account)
-		print('sweepin '+account+'...')
+	for account in range(acc_num, len(accounts)):
+		if account != accounts.index(start_with):
+			switch_account(accounts[account])
 
-	print('do stuff here...')
+		print('sweepin '+accounts[account]+'...')
+
+		mysery_box()
+		send_help()
+		emote()
+		login_gifts()
+		send_help()
+		quests()
+		collect_gifts(accounts[account])
+		send_help()
+		time.sleep(0.3)
+
+		acc_num += 1
+
 	print('going back home...')
 	switch_account('sneaky')
 
@@ -101,18 +268,18 @@ def shield():
 	print('changing shields...')
 	login_wait()
 
-	acc_num = 0
+	acc_num = accounts.index(start_with)
 	for account in accounts:
 		if acc_num > 0:
 			switch_account(account)
 
 		print('bubblin '+account+' ...')
-		time.sleep(1)
+		time.sleep(3)
 		pyautogui.click(x=1410, y=459)
 		
 		wait_for_icon_to_appear('boosts/shield.png')
 		pyautogui.click('boosts/shield.png')
-		time.sleep(1) ###############################################0.1
+		time.sleep(3)
 
 		if datetime.datetime.today().weekday() > 4:
 			print('Weekend, shields already up!')
@@ -126,16 +293,16 @@ def shield():
 		    # 1d
 			pyautogui.click(x=1225, y=649)
 		
-		time.sleep(1)
+		time.sleep(3)
 		pyautogui.click(x=1033, y=531)
 
-		time.sleep(1)
+		time.sleep(3)
 
 		pyautogui.click(x=1404, y=306)
-		time.sleep(1)
+		time.sleep(3)
 
 		evd = pyautogui.screenshot(region=(479, 269, 963, 543))
-		evd.save(r'E:\.111\python\oukrekya\logs\shields\\'+account+'.png')
+		evd.save(r'C:\Users\lawrencie\Desktop\reports\shield\\'+account+'.png')
 
 		print('good, switching')
 		acc_num += 1
@@ -149,7 +316,7 @@ def kvk_check():
 	print('doing kvk...')
 	login_wait()
 
-	acc_num = 0
+	acc_num = accounts.index(start_with)
 
 	for account in accounts:
 		if acc_num > 0:
@@ -171,7 +338,7 @@ def kvk():
 	runs = 0
 
 	while runs < 5:
-		acc_num = 0
+		acc_num = accounts.index(start_with)
 
 		for account in accounts:
 			if acc_num > 0:
@@ -199,7 +366,7 @@ def dragon_in():
 	print('entering dragon...')
 	login_wait()
 
-	acc_num = 0
+	acc_num = accounts.index(start_with)
 
 	for account in accounts:
 		if acc_num > 0:
@@ -216,7 +383,7 @@ def dragon_out():
 	print('exiting dragon...')
 	login_wait()
 
-	acc_num = 0
+	acc_num = accounts.index(start_with)
 
 	for account in accounts:
 		if acc_num > 0:
@@ -227,12 +394,21 @@ def dragon_out():
 	print('going back home...')
 	switch_account('sneaky')
 
+# testing
+
+def say_start():
+	print(start_with)
+	print(accounts.index(start_with))
+	time.sleep(8)
 
 ## procedure
 
-open_game()
+lm_task = pyautogui.confirm(text='What you wanna do?', title='Task' , buttons=['routine', 'shield', 'kvk', 'dragon in', 'dragon out', 'cry'])
 
-lm_task = pyautogui.prompt(text='Choices: routine, shield, kvk, dragon in, dragon out', title='Task' , default='routine')
+start_with = pyautogui.confirm(text='What you wanna do?', title='Task' , buttons=accounts)
+
+cry()
+open_game()
 
 if lm_task == 'routine':
 	routine()
@@ -245,7 +421,10 @@ elif lm_task == 'dragon in':
 elif lm_task == 'dragon out':
 	dragon_out()
 else:
+	say_start()
 	print('More possibilities on the way ;)')
+
+cry()
 
 print('S: done')
 
