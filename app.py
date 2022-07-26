@@ -233,6 +233,131 @@ def emote():
 	pyautogui.click(x=1406, y=306)
 	time.sleep(1)
 
+# sta
+
+def sta(account):
+	print('using sta ... ')
+	hero = guide['accounts'][account]['hero']
+	stage_type = guide['accounts'][account]['sta']
+	max_scrls = 10
+
+	time.sleep(0.3)
+	pyautogui.click(x=1326, y=777)
+
+	time.sleep(0.3)
+	evd = pyautogui.screenshot(region=(479, 269, 963, 543))
+	evd.save(r'C:\Users\lawrencie\Desktop\reports\heroes\pre_'+account+'.png')
+
+	pyautogui.moveTo(x=1120, y=676)
+
+	while not pyautogui.locateOnScreen('heroes/'+hero+'.png', grayscale=True, confidence=0.7) and max_scrls > 0:
+	    pyautogui.drag(0, -100, 1)
+	    pyautogui.move(0, 100)
+	    max_scrls -= 1
+
+	if pyautogui.locateOnScreen('heroes/'+hero+'.png', grayscale=True, confidence=0.7):
+		x,y = pyautogui.locateCenterOnScreen('heroes/'+hero+'.png', grayscale=True, confidence=0.7)
+		pyautogui.click(x=x, y=y)
+		time.sleep(0.5)
+
+		evd = pyautogui.screenshot(region=(479, 269, 963, 543))
+		evd.save(r'C:\Users\lawrencie\Desktop\reports\heroes\\'+account+'.png')
+
+		if stage_type == 'elite':
+			time.sleep(0.1)
+			pyautogui.click(x=1307, y=728)
+			time.sleep(0.5)
+			pyautogui.click(x=849, y=525)
+			time.sleep(0.3)
+
+			if pyautogui.locateOnScreen('heroes/fight.png', grayscale=True, confidence=0.7):
+				pyautogui.click(x=1322, y=563)
+				time.sleep(0.1)
+				pyautogui.click(x=1322, y=563)
+				time.sleep(0.1)
+				pyautogui.click(x=1322, y=563)
+
+			else:
+				print('no fight button? how? moving on...')
+
+		elif stage_type == 'normal':
+			if pyautogui.locateOnScreen('heroes/none.png', grayscale=True, confidence=0.7):
+				x,y = pyautogui.locateCenterOnScreen('heroes/none.png', grayscale=True, confidence=0.7)
+				pyautogui.click(x=x, y=y)
+				time.sleep(1)
+				pyautogui.click(x=1118, y=617)
+				time.sleep(1)
+
+				sink_hole = 5
+				while not pyautogui.locateOnScreen('heroes/obtained_from.png', grayscale=True, confidence=0.7):
+					pyautogui.click(x=945, y=587)
+					sink_hole -= 1
+					time.sleep(0.8)
+
+				if pyautogui.locateOnScreen('heroes/obtained_from.png', grayscale=True, confidence=0.7):
+					pyautogui.click(x=814, y=647)
+					time.sleep(1)
+					pyautogui.click(x=1322, y=563)
+					time.sleep(0.1)
+					pyautogui.click(x=1322, y=563)
+					time.sleep(0.1)
+					pyautogui.click(x=1322, y=563)
+
+				else:
+					print('sink hole too deep...')
+
+		else:
+			print('type not defined, moving on...')
+
+	else:
+		print('hero not found, strange, moving on...')
+
+	time.sleep(1)
+	while pyautogui.locateOnScreen('rss/x_btn.png', confidence=0.7, grayscale=True):
+		x, y = pyautogui.locateCenterOnScreen('rss/x_btn.png', confidence=0.7, grayscale=True)
+		time.sleep(0.3)
+		pyautogui.click(x=x, y=y)
+		time.sleep(1)
+
+# essence
+
+def darknest():
+	print('collecting essence rewards...')
+	if pyautogui.locateOnScreen('projects/tick.png', confidence=0.7, grayscale=True):
+		x,y = pyautogui.locateCenterOnScreen('projects/tick.png', confidence=0.7, grayscale=True)
+		pyautogui.click(x=x, y=y)
+		time.sleep(1)
+
+		if pyautogui.locateOnScreen('lab/collect.png', confidence=0.7, grayscale=True):
+			x,y = pyautogui.locateCenterOnScreen('lab/collect.png', confidence=0.7, grayscale=True)
+			pyautogui.click(x=x, y=y)
+			time.sleep(0.3)
+
+			wait_for_icon_to_appear('lab/ok_collect_ess.png')
+			x,y = pyautogui.locateCenterOnScreen('lab/ok_collect_ess.png', confidence=0.7, grayscale=True)
+			pyautogui.click(x=x, y=y)
+			time.sleep(1)
+
+			if pyautogui.locateOnScreen('lab/transmute.png', confidence=0.7, grayscale=True):
+				x,y = pyautogui.locateCenterOnScreen('lab/transmute.png', confidence=0.7, grayscale=True)
+				pyautogui.click(x=x, y=y+50)
+				time.sleep(0.3)
+				pyautogui.click(x=961, y=676)
+				time.sleep(1)
+			else:
+				print('no essence to transmute')
+
+		else:
+			print('no essence to collect, weird...')
+
+		while pyautogui.locateOnScreen('rss/x_btn.png', confidence=0.7, grayscale=True):
+			x, y = pyautogui.locateCenterOnScreen('rss/x_btn.png', confidence=0.7, grayscale=True)
+			pyautogui.click(x=x, y=y)
+			time.sleep(1)
+	else:
+		print('no essence, will do this part in turf explore...')
+	#pyautogui.click
+
 # normal stuff
 
 def routine():
@@ -250,8 +375,9 @@ def routine():
 		mysery_box()
 		send_help()
 		emote()
+		darknest()
 		login_gifts()
-		send_help()
+		sta(accounts[account])
 		quests()
 		collect_gifts(accounts[account])
 		send_help()

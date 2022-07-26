@@ -1,34 +1,50 @@
 {
 	"accounts" : {
 		"sneaky" : {
-			"sta" : "elementalist",
+			"sta" : "normal",
+			"hero" : "night_raven",
 			"vip" : true,
 			"hyper" : "stone"
 		},
 		"lmara" : {
-			"sta" : "elementalist",
+			"sta" : "elite",
+			"hero" : "snow_queen",
 			"vip" : false,
 			"hyper" : "wood"
 		},
 		"imara" : {
-			"sta" : "elementalist",
+			"sta" : "elite",
+			"hero" : "bombing_goblin",
 			"vip" : true,
 			"hyper" : "ore"
 		},
 		"snaeky" : {
-			"sta" : "elementalist",
+			"sta" : "elite",
+			"hero" : "death_knight",
 			"vip" : false,
 			"hyper" : "ore"
 		},
 		"gachiq" : {
-			"sta" : "elementalist",
+			"sta" : "elite",
+			"hero" : "death_archer",
 			"vip" : true,
 			"hyper" : "ore"
 		},
 		"kibunja" : {
-			"sta" : "elementalist",
+			"sta" : "elite",
+			"hero" : "sage_of_storms",
 			"vip" : true,
 			"hyper" : "wood"
+		}
+	},
+	"monsters" : {
+		"queen_bee" : {
+			"lineup" : "elite",
+			"hero" : "death_knight"
+		},
+		"saberfang" : {
+			"lineup" : "elite",
+			"hero" : "death_knight"
 		}
 	}
 }
