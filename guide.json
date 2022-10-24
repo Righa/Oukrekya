@@ -1,38 +1,38 @@
 {
 	"accounts" : {
 		"sneaky" : {
-			"sta" : "normal",
-			"hero" : "night_raven",
+			"sta" : "elite",
+			"hero" : "rose_knight",
 			"vip" : true,
 			"hyper" : "stone"
 		},
 		"lmara" : {
 			"sta" : "elite",
-			"hero" : "snow_queen",
-			"vip" : false,
+			"hero" : "oath_keeper",
+			"vip" : true,
 			"hyper" : "wood"
 		},
 		"imara" : {
 			"sta" : "elite",
-			"hero" : "bombing_goblin",
+			"hero" : "oath_keeper",
 			"vip" : true,
 			"hyper" : "ore"
 		},
 		"snaeky" : {
 			"sta" : "elite",
-			"hero" : "death_knight",
-			"vip" : false,
+			"hero" : "oath_keeper",
+			"vip" : true,
 			"hyper" : "ore"
 		},
 		"gachiq" : {
 			"sta" : "elite",
-			"hero" : "death_archer",
+			"hero" : "black_crow",
 			"vip" : true,
 			"hyper" : "ore"
 		},
 		"kibunja" : {
 			"sta" : "elite",
-			"hero" : "sage_of_storms",
+			"hero" : "oath_keeper",
 			"vip" : true,
 			"hyper" : "wood"
 		}
