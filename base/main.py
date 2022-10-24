@@ -4,7 +4,6 @@ import pyautogui, subprocess, time, screen_brightness_control
 class MiApp():
 
 	def run(self):
-		screen_brightness_control.set_brightness(1, display=0)
 
 		subprocess.Popen('C:\\LDPlayer\\LDPlayer4.0\\dnplayer.exe')
 
@@ -13,6 +12,11 @@ class MiApp():
 		lm_task = pyautogui.confirm(text='What you want to do?', title='Task' , buttons=['routine', 'shield', 'kvk', 'dragon in', 'dragon out', 'cry'])
 
 		self.start_with = pyautogui.confirm(text='What acc goes first?', title='Account' , buttons=self.accounts)
+
+		if lm_task == 'shield':
+			self.turf.shield_len = pyautogui.confirm(text='Choose bubble period', title='Shield duration' , buttons=['8h', '1d', '3d'])
+
+		screen_brightness_control.set_brightness(1, display=0)
 
 		print('I: opening game...')
 		self.log.write('I: opening game... \n\n')
@@ -26,9 +30,6 @@ class MiApp():
 		x, y = pyautogui.locateCenterOnScreen('rss/app_icon.png', confidence=0.8, grayscale=True)
 		time.sleep(0.3)
 		pyautogui.click(x=x, y=y)
-
-		if lm_task == 'shield':
-			self.turf.shield_len = pyautogui.confirm(text='Choose bubble period', title='Shield duration' , buttons=['8h', '1d', '3d'])
 
 		self.login_wait()
 
@@ -52,6 +53,8 @@ class MiApp():
 		self.log.write('S: done! \n')
 
 		self.log.close()
+
+		screen_brightness_control.set_brightness(50, display=0)
 
 	def login_wait(self):
 
