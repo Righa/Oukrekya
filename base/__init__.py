@@ -1,6 +1,6 @@
 ## imports
 
-import subprocess, json
+import subprocess, json, os
 from datetime import datetime
 from base.main import MiApp
 from base.alerts import Alerts
@@ -15,7 +15,7 @@ subprocess.Popen('C:\\LDPlayer\\LDPlayer4.0\\dnplayer.exe')
 
 # Open log channel
 ts = datetime.now()
-trr = 'C:\\Users\\PEPPA\\Desktop\\reports\\logs\\'+str(ts.day)+'-'+str(ts.month)+' '+str(ts.hour)+str(ts.minute)+' log.txt'
+trr = os.environ['USERPROFILE']+'\\Desktop\\reports\\logs\\'+str(ts.day)+'-'+str(ts.month)+' '+str(ts.hour)+str(ts.minute)+' log.txt'
 app.log = open(trr, 'w')
 
 # Open alert channel

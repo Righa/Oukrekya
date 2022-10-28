@@ -1,5 +1,5 @@
 # do normal stuff
-import pyautogui, time
+import pyautogui, time, os
 
 class Turf():
 	def __init__(self, app):
@@ -48,7 +48,7 @@ class Turf():
 			time.sleep(3)
 
 			evd = pyautogui.screenshot(region=(479, 269, 963, 543))
-			evd.save(r'C:\Users\PEPPA\Desktop\reports\shield\\'+self.app.accounts[account]+'.png')
+			evd.save(os.environ['USERPROFILE']+'\\Desktop\\reports\\shield\\'+self.app.accounts[account]+'.png')
 
 			self.app.log.write('I: Good, switching... \n\n')
 			print('I: Good, switching')
@@ -221,7 +221,7 @@ class Turf():
 			time.sleep(0.5)
 
 			evd = pyautogui.screenshot(region=(479, 269, 963, 543))
-			evd.save(r'C:\Users\PEPPA\Desktop\reports\heroes\\'+account+'.png')
+			evd.save(os.environ['USERPROFILE']+'\\Desktop\\reports\\heroes\\'+account+'.png')
 
 			if stage_type == 'elite':
 				time.sleep(0.1)

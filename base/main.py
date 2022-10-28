@@ -9,7 +9,7 @@ class MiApp():
 
 		self.alerts.cry()
 
-		lm_task = pyautogui.confirm(text='What you want to do?', title='Task' , buttons=['routine', 'shield', 'kvk', 'dragon in', 'dragon out', 'cry'])
+		lm_task = pyautogui.confirm(text='What you want to do?', title='Task' , buttons=['routine', 'shield'])
 
 		self.start_with = pyautogui.confirm(text='What acc goes first?', title='Account' , buttons=self.accounts)
 
